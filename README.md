@@ -31,9 +31,10 @@ Do a functional CRUD contactlist with ruby on rails + react.
 Intended development:
 
 ##2.0
+* Encrypt
+* Pagination
 * Find contact duplicates
 * Contact pictures
-* A pagination helper
 * Integration test
 
 ##1.0
