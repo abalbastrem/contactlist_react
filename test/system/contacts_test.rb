@@ -14,7 +14,6 @@ class ContactsTest < ApplicationSystemTestCase
     visit contacts_url
     click_on "New Contact"
 
-    check "Active" if @contact.active
     fill_in "Email", with: @contact.email
     fill_in "First name", with: @contact.first_name
     fill_in "Last name", with: @contact.last_name
@@ -29,7 +28,6 @@ class ContactsTest < ApplicationSystemTestCase
     visit contacts_url
     click_on "Edit", match: :first
 
-    check "Active" if @contact.active
     fill_in "Email", with: @contact.email
     fill_in "First name", with: @contact.first_name
     fill_in "Last name", with: @contact.last_name
