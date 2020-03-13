@@ -26,7 +26,7 @@ Things you may want to cover:
 
 # Contact list
 
-Do a functional CRUD contactlist with ruby on rails + react.
+Do a functional CRUD contact list with ruby on rails + react.
 
 ##Actual development:
 
@@ -37,10 +37,8 @@ Do a functional CRUD contactlist with ruby on rails + react.
 ##Intended development:
 
 ###2.0
-* Encrypt
 * Pagination
 * Find contact duplicates
-* Contact pictures
 * Integration test
 
 ###1.0
