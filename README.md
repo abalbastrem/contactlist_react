@@ -28,17 +28,23 @@ Things you may want to cover:
 
 Do a functional CRUD contactlist with ruby on rails + react.
 
-Intended development:
+##Actual development:
 
-##2.0
+###0.6
+* Fully functional CRUD
+* Known bugs: when updating contact, it shows at the end of contact list
+
+##Intended development:
+
+###2.0
 * Encrypt
 * Pagination
 * Find contact duplicates
 * Contact pictures
 * Integration test
 
-##1.0
-* CRUD contacts (Delete is mock)
+###1.0
+* CRUD contacts
 * Reactive frontend
     * Desktop
         * full contact details

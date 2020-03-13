@@ -3,7 +3,10 @@ import React from 'react'
 class ContactList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {contacts: []}
+        this.state = {
+            contacts: [],
+            msg: ""
+        }
 
         this.fetchAllContacts()
     };
@@ -18,7 +21,6 @@ class ContactList extends React.Component {
     }
 
     handleDelete(contactId) {
-        // TODO alert
         console.log("DELETE " + contactId)
 
         const apiUrl = "http://localhost:3000/contacts/" + contactId
@@ -30,15 +32,10 @@ class ContactList extends React.Component {
         }
 
         fetch(apiUrl, apiOpt)
-            // .then(response => {
-            //     console.log('Contact ${contactId} was deleted!');
-            //     this.deleteContact(contactId);
-            // });
             .then(this.deleteContactDOM(contactId))
     }
 
     deleteContactDOM(contactId) {
-        console.log("DELETE DOM")
         let updatedContacts = this.state.contacts.filter(contact => contact.id !== contactId)
         this.setState({
             contacts: updatedContacts
@@ -49,10 +46,27 @@ class ContactList extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
-        // TODO check all fields are filled in
+        // checks all fields are filled TODO toggle sumbit button
+        if (!this.refs.first_name.value || this.refs.first_name.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return
+        }
+        if (!this.refs.last_name.value || this.refs.last_name.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return
+        }
+        if (!this.refs.email.value || this.refs.email.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return
+        }
+        if (!this.refs.phone.value || this.refs.phone.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return
+        }
 
         if (!this.isEmailValid(this.refs.email.value)) {
-            // TODO exit function and show error
+            this.message("email is not correctly formatted")
+            return
         }
 
         let inputContact = {
@@ -63,9 +77,6 @@ class ContactList extends React.Component {
             phone: this.refs.phone.value,
         }
 
-        console.log("SUBMIT")
-        console.log(inputContact)
-
         if (inputContact.id == -1) {
             this.handleCreate(inputContact)
         } else {
@@ -74,11 +85,15 @@ class ContactList extends React.Component {
     }
 
     isEmailValid(email) { // TODO move out to helper?
+        let emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if (!emailRegex.test(email)) {
+            return false
+        }
 
+        return true
     }
 
     handleCreate(inputContact) {
-        console.log("CREATE")
         const apiUrl = "http://localhost:3000/contacts"
         const apiOpt = {
             method: "POST",
@@ -89,7 +104,8 @@ class ContactList extends React.Component {
         }
 
         if (!this.isEmailUnique(inputContact.email)) {
-            // TODO check duplicate email. If so, error and stop
+            this.message("email must be unique")
+            return
             // TODO also do this at DB level
         }
 
@@ -99,10 +115,29 @@ class ContactList extends React.Component {
                 return response.json()
             })
             .then(insertedContact => {
-                console.log("INSERTED CONTACT")
-                console.log(insertedContact)
                 this.createContactDOM(insertedContact)
             })
+    }
+
+    isEmailUnique(email) { // TODO move out to helper?
+        let duplicated = this.state.contacts.filter(contact => contact.email === email)
+        if (duplicated.length > 0) {
+            return false
+        }
+
+        return true
+    }
+
+    message(msg) { // TODO move out to helper
+        // TODO make timed messages
+        this.setState({
+            msg: msg
+        })
+
+        // setTimeout(
+        //     this.setState({
+        //         msg: ""
+        //     }), 2000)
     }
 
     createContactDOM(contact) {
@@ -144,8 +179,6 @@ class ContactList extends React.Component {
         let contacts = this.state.contacts.filter(contact => contact.id != updatedContact.id)
         // pushes updated contact in
         contacts.push(updatedContact)
-        console.log("NEW CONTACTS")
-        console.log(contacts)
         // updates DOM
         this.setState({
             contacts: contacts
@@ -161,7 +194,9 @@ class ContactList extends React.Component {
                     <td>{contact.last_name}</td>
                     <td>{contact.email}</td>
                     <td>{contact.phone}</td>
-                    <button onClick={() => this.handleDelete(contact.id)}>Delete</button>
+                    <button  onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.handleDelete(contact.id) } }>
+                        Delete
+                    </button>
                     <button onClick={() => this.moveContactToForm(contact.id)}>Edit</button>
                 </tr>
             )
@@ -181,6 +216,7 @@ class ContactList extends React.Component {
                         <button onClick={(event) => this.handleSubmit(event)}>submit</button>
                     </form>
                 </div>
+                <div ref="error_div">{this.state.msg}</div>
                 <table>
                     <thead>
                     <tr>
