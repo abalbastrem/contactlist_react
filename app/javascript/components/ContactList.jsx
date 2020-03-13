@@ -5,10 +5,10 @@ class ContactList extends React.Component {
         super(props);
         this.state = {contacts: []}
 
-        this.getAllContacts()
+        this.fetchAllContacts()
     };
 
-    getAllContacts() {
+    fetchAllContacts() {
         fetch('http://localhost:3000/contacts.json')
             .then(response => response.json())
             .then(data => this.setState({
@@ -17,7 +17,8 @@ class ContactList extends React.Component {
             )
     }
 
-    handleDelete(contactId) { // Move to Model?
+    handleDelete(contactId) {
+        // TODO alert
         console.log("DELETE " + contactId)
 
         const apiUrl = "http://localhost:3000/contacts/" + contactId
@@ -44,11 +45,15 @@ class ContactList extends React.Component {
         })
     }
 
-    // can either create a new contact or edit an existing one
+    // will either create a new contact or edit an existing one
     handleSubmit = (event) => {
         event.preventDefault()
 
-        // TODO check email validity
+        // TODO check all fields are filled in
+
+        if (!this.isEmailValid(this.refs.email.value)) {
+            // TODO exit function and show error
+        }
 
         let inputContact = {
             id: this.refs.id_contact.value,
@@ -68,6 +73,10 @@ class ContactList extends React.Component {
         }
     }
 
+    isEmailValid(email) { // TODO move out to helper?
+
+    }
+
     handleCreate(inputContact) {
         console.log("CREATE")
         const apiUrl = "http://localhost:3000/contacts"
@@ -79,7 +88,11 @@ class ContactList extends React.Component {
             }
         }
 
-        // TODO check duplicate email
+        if (!this.isEmailUnique(inputContact.email)) {
+            // TODO check duplicate email. If so, error and stop
+            // TODO also do this at DB level
+        }
+
 
         fetch(apiUrl, apiOpt)
             .then(response => {
@@ -93,7 +106,6 @@ class ContactList extends React.Component {
     }
 
     createContactDOM(contact) {
-        console.log("CREATE DOM")
         this.setState({
             contacts: this.state.contacts.concat(contact)
         })
@@ -103,13 +115,13 @@ class ContactList extends React.Component {
     moveContactToForm(contactId) {
         let contact = this.state.contacts.filter(contact => contact.id === contactId)[0]
 
-        console.log(contact)
-
         this.refs.id_contact.value = contact.id
         this.refs.first_name.value = contact.first_name
         this.refs.last_name.value = contact.last_name
         this.refs.email.value = contact.email
         this.refs.phone.value = contact.phone
+
+        this.refs.first_name.focus()
     }
 
     handleEdit(inputContact) {
@@ -126,10 +138,18 @@ class ContactList extends React.Component {
             .then(this.editContactDOM(inputContact))
     }
 
-    // TODO
-    editContactDOM(contact) {
-        this.deleteContactDOM(contact.id)
-        // this.createContactDOM(contact)
+    // TODO BUG puts edited contact at the very end of contactlist
+    editContactDOM(updatedContact) {
+        // gets rest of contacts
+        let contacts = this.state.contacts.filter(contact => contact.id != updatedContact.id)
+        // pushes updated contact in
+        contacts.push(updatedContact)
+        console.log("NEW CONTACTS")
+        console.log(contacts)
+        // updates DOM
+        this.setState({
+            contacts: contacts
+        })
         this.refs.contact_form.reset()
     }
 
@@ -173,14 +193,7 @@ class ContactList extends React.Component {
                     </thead>
 
                     <tbody>
-                    {/*<tr>*/}
-                    {/*    <td><input type="text"/></td>*/}
-                    {/*    <td>input name</td>*/}
-                    {/*    <td>input Email</td>*/}
-                    {/*    <td>input Phone</td>*/}
-                    {/*</tr>*/}
                     {this.renderTableData()}
-                    {/*<button onClick={() => this.handleCreate()}>New</button>*/}
                     </tbody>
                 </table>
             </div>
