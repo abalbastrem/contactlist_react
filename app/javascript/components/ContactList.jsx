@@ -194,10 +194,12 @@ class ContactList extends React.Component {
                     <td>{contact.last_name}</td>
                     <td>{contact.email}</td>
                     <td>{contact.phone}</td>
-                    <button  onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.handleDelete(contact.id) } }>
+                    <button id="edit-button" onClick={() => this.moveContactToForm(contact.id)}>Edit</button>
+                    <button id="delete-button" onClick={(e) => {
+                        if (window.confirm('Are you sure you wish to delete this contact?')) this.handleDelete(contact.id)}}>
                         Delete
                     </button>
-                    <button onClick={() => this.moveContactToForm(contact.id)}>Edit</button>
+
                 </tr>
             )
         });
@@ -213,10 +215,10 @@ class ContactList extends React.Component {
                         <input type="text" placeholder="last name" name="last_name" ref="last_name"/>
                         <input type="text" placeholder="email" name="email" ref="email"/>
                         <input type="text" placeholder="phone" name="phone" ref="phone"/>
-                        <button onClick={(event) => this.handleSubmit(event)}>submit</button>
+                        <button id="submit-form" onClick={(event) => this.handleSubmit(event)}>submit</button>
                     </form>
                 </div>
-                <div ref="error_div">{this.state.msg}</div>
+                <div id="error_div" ref="error_div">{this.state.msg}</div>
                 <table>
                     <thead>
                     <tr>

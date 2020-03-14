@@ -11,5 +11,7 @@ Contact.create([
                    {first_name: 'Marietta', last_name: 'Cosmopilite', email: 'marietta@mariettasdresses.am', phone: '651831654'},
                    {first_name: 'Rufus', last_name: 'Drumknott', email: 'r.drumknott@gmail.com', phone: '451334566'},
                    {first_name: 'Carrot', last_name: 'Ironfoundersson', email: 'cironfoundersson@citywatch.am', phone: '745714325'},
-                   {first_name: 'Cheery', last_name: 'Littlebottom', email: 'clittlebottom@citywatch.am', phone: '284685121'}
+                   {first_name: 'Cheery', last_name: 'Littlebottom', email: 'clittlebottom@citywatch.am', phone: '284685121'},
+                   {first_name: 'Arthur', last_name: 'Dent', email: 'arthurthedent@hotmail.uk', phone: '744541263'},
+                   {first_name: 'Zaphod', last_name: 'Beeblerox', email: 'zaphrox@president.gov.uv', phone: '944965121'}
                ])

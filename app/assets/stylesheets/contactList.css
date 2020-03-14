@@ -1,0 +1,75 @@
+body {
+    font-size: 20px;
+    font-family: helvetica, sans-serif;
+}
+
+table {
+    width: 40%;
+}
+
+table, th, td {
+    padding: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    width: 15%;
+}
+
+form {
+    width: 50%;
+}
+
+input[type=text], select {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+#submit_button {
+    background-color: rebeccapurple;
+}
+
+#submit_button:hover {
+    background-color: purple;
+}
+
+#edit-button {
+    background-color: #e7e7e7;
+}
+
+#delete-button {
+    background-color: #f44336;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+h1 {
+    color: rebeccapurple;
+}
+
+#error_div {
+    color: red;
+}
