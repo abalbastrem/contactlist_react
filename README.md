@@ -1,35 +1,16 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
 # Contact list
 
 Do a functional CRUD contact list with ruby on rails + react.
 Persist contacts in database and do not allow email duplicates.
 
 **Known bugs: when updating contact, it shows at the end of contact list**
+
+##setup
+1. clone this repository to your system
+2. open a terminal in the root and type `rails s`
+    * you may need to update yarn. If so, do as instructed in the terminal
+4. once the server is up and running, open your browser and go to `http://localhost:3000/contacts`
+    * you may need to run a db migration. If the button on screen does not work, go to terminal and run `rails db:migrate` 
 
 ##Development:
 
@@ -58,3 +39,17 @@ Persist contacts in database and do not allow email duplicates.
         * single all purpose search bar
 * No email duplicates
 * Unit tests
+
+##Achievements
+* Installed the latest stable Ruby On Rails framework with React using rvm and webpack
+* Learned the basics of Ruby On Rails
+* Did a quick CRUD using scaffold
+* Learned the basics of React
+
+##Areas for improvement
+* Practice ruby syntax and structures
+* Need to make more use of React's advantages of rendering and a better grasp of its general philosophy
+* Find a better way of using styles, as React has lots of options
+
+##Observations
+Although there has been a steep initial learning curve, I would be able to replicate a simple CRUD in a much shorter time.
