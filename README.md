@@ -26,18 +26,29 @@ Things you may want to cover:
 
 # Contact list
 
-Do a functional CRUD contactlist with ruby on rails + react.
+Do a functional CRUD contact list with ruby on rails + react.
+Persist contacts in database and do not allow email duplicates.
 
-Intended development:
+**Known bugs: when updating contact, it shows at the end of contact list**
 
-##2.0
+##Development:
+
+###0.7
+* CSS added
+
+###0.6
+* Fully functional CRUD
+* Known bugs: when updating contact, it shows at the end of contact list
+
+##Intended development:
+
+###2.0
+* Pagination
 * Find contact duplicates
-* Contact pictures
-* A pagination helper
 * Integration test
 
-##1.0
-* CRUD contacts (Delete is mock)
+###1.0
+* CRUD contacts
 * Reactive frontend
     * Desktop
         * full contact details
