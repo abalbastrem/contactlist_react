@@ -145,6 +145,7 @@ class ContactList extends React.Component {
             contacts: this.state.contacts.concat(contact)
         })
         this.refs.contact_form.reset()
+        this.message("")
     }
 
     moveContactToForm(contactId) {
@@ -157,6 +158,7 @@ class ContactList extends React.Component {
         this.refs.phone.value = contact.phone
 
         this.refs.first_name.focus()
+        this.message("x")
     }
 
     handleEdit(inputContact) {
@@ -184,6 +186,7 @@ class ContactList extends React.Component {
             contacts: contacts
         })
         this.refs.contact_form.reset()
+        this.message("")
     }
 
     renderTableData() {
