@@ -5,7 +5,7 @@ Persist contacts in database and do not allow email duplicates.
 
 Known bugs:
 * when updating contact, it shows at the end of contact list
-* when editing a contact, if an email is not correctly formatted, prevents further editing
+* when editing a contact, if submitted email is not correctly formatted, prevents further editing
 * error message sometimes won't disappear
 
 ##setup
