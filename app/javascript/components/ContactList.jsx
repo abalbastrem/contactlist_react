@@ -140,15 +140,17 @@ class ContactList extends React.Component {
     }
 
     message(msg) { // TODO move out to helper
-        // TODO make timed messages
         this.setState({
             msg: msg
         })
 
-        // setTimeout(
-        //     this.setState({
-        //         msg: ""
-        //     }), 2000)
+        setTimeout(function () {
+            console.log("TIMEOUT")
+            this.setState({
+                msg: ""
+            })
+        }.bind(this), 3000)
+
     }
 
     createContactDOM(contact) {
@@ -212,7 +214,8 @@ class ContactList extends React.Component {
                     <td>{contact.phone}</td>
                     <button id="edit-button" onClick={() => this.moveContactToForm(contact.id)}>Edit</button>
                     <button id="delete-button" onClick={(e) => {
-                        if (window.confirm('Are you sure you wish to delete this contact?')) this.handleDelete(contact.id)}}>
+                        if (window.confirm('Are you sure you wish to delete this contact?')) this.handleDelete(contact.id)
+                    }}>
                         Delete
                     </button>
 
