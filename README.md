@@ -3,11 +3,6 @@
 Do a functional CRUD contact list with ruby on rails + react.
 Persist contacts in database and do not allow email duplicates.
 
-Known bugs:
-* when updating contact, it shows at the end of contact list
-* when editing a contact, if an email is not correctly formatted, prevents further editing
-* error message sometimes won't disappear
-
 ##setup
 1. clone this repository to your system
 2. open a terminal in the root and type `rails s`
@@ -17,6 +12,13 @@ Known bugs:
 5. If you want a few contacts in the list already, go to terminal and run `rails db:seed` 
 
 ##Development:
+
+### 0.9
+* Contacts are now sorted alphabetically
+* BUGFIXES
+    * editing contacts fully works, even after bad email formatting
+    * messages now disappear after a bit
+    * newly created and edited contacts respect alphabetical order
 
 ###0.7
 * CSS added
@@ -30,10 +32,6 @@ Known bugs:
 ###2.0
 * Pagination
 * Find contact duplicates
-* Integration test
-
-###1.0
-* CRUD contacts
 * Reactive frontend
     * Desktop
         * full contact details
@@ -41,6 +39,10 @@ Known bugs:
     * Mobile
         * contact full names
         * single all purpose search bar
+* Integration test
+
+###1.0
+* CRUD contacts
 * No email duplicates
 * Unit tests
 

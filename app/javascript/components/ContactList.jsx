@@ -7,22 +7,51 @@ class ContactList extends React.Component {
             contacts: [],
             msg: ""
         }
-
-        this.fetchAllContacts()
     };
+
+    componentDidMount() {
+        this.fetchAllContacts()
+        this.sortStateContacts()
+    }
 
     fetchAllContacts() {
         fetch('http://localhost:3000/contacts.json')
             .then(response => response.json())
-            .then(data => this.setState({
-                    contacts: data
-                })
-            )
+            .then(fetchedContacts => this.sortAndLoadContactsToState(fetchedContacts))
+    }
+
+    sortAndLoadContactsToState(contacts) {
+        contacts.sort(function (a, b) {
+            if (a.first_name > b.first_name) {
+                return 1
+            }
+            if (a.first_name < b.first_name) {
+                return -1
+            }
+            return 0
+        })
+        this.setState({
+            contacts: contacts
+        })
+    }
+
+    sortStateContacts() {
+        let contacts = this.state.contacts
+        contacts.sort(function (a, b) {
+            if (a.first_name > b.first_name) {
+                return 1
+            }
+            if (a.first_name < b.first_name) {
+                return -1
+            }
+            return 0
+        })
+        this.setState({
+            contacts: contacts
+        })
     }
 
     handleDelete(contactId) {
-        console.log("DELETE " + contactId)
-
         const apiUrl = "http://localhost:3000/contacts/" + contactId
         const apiOpt = {
             method: "DELETE",
@@ -40,6 +69,7 @@ class ContactList extends React.Component {
         this.setState({
             contacts: updatedContacts
         })
+        this.message("contact deleted")
     }
 
     // will either create a new contact or edit an existing one
@@ -66,10 +96,8 @@ class ContactList extends React.Component {
         }
 
         if (inputContact.id.length == "" || inputContact.id.length == 0) {
-            console.log("CREATE")
             this.handleCreate(inputContact)
         } else {
-            console.log("EDIT")
             this.handleEdit(inputContact)
         }
     }
@@ -145,7 +173,6 @@ class ContactList extends React.Component {
         })
 
         setTimeout(function () {
-            console.log("TIMEOUT")
             this.setState({
                 msg: ""
             })
@@ -160,6 +187,7 @@ class ContactList extends React.Component {
         this.refs.contact_form.reset()
         this.refs.id_contact.value = ""
         this.message("contact created")
+        this.sortStateContacts()
     }
 
     moveContactToForm(contactId) {
@@ -172,7 +200,6 @@ class ContactList extends React.Component {
         this.refs.phone.value = contact.phone
 
         this.refs.first_name.focus()
-        this.message("x")
     }
 
     handleEdit(inputContact) {
@@ -189,19 +216,29 @@ class ContactList extends React.Component {
             .then(this.editContactDOM(inputContact))
     }
 
-    // TODO BUG puts edited contact at the very end of contactlist
     editContactDOM(updatedContact) {
         // gets rest of contacts
         let contacts = this.state.contacts.filter(contact => contact.id != updatedContact.id)
         // pushes updated contact in
         contacts.push(updatedContact)
         // updates DOM
-        this.setState({
-            contacts: contacts
-        })
+        this.sortAndLoadContactsToState(contacts)
         this.refs.contact_form.reset()
         this.refs.id_contact.value = ""
         this.message("contact edited")
+    }
+
+    renderForm() {
+        return (
+            <form ref="contact_form">
+                <input type="hidden" id="contactId" name="id_contact" ref="id_contact"/>
+                <input type="text" placeholder="first name" name="first_name" ref="first_name"/>
+                <input type="text" placeholder="last name" name="last_name" ref="last_name"/>
+                <input type="text" placeholder="email" name="email" ref="email"/>
+                <input type="text" placeholder="phone" name="phone" ref="phone"/>
+                <button id="submit-form" onClick={(event) => this.handleSubmit(event)}>submit</button>
+            </form>
+        )
     }
 
     renderTableData() {
@@ -226,16 +263,10 @@ class ContactList extends React.Component {
 
     render() {
         return (<div>
-                <h1>React Contacts</h1>
+                <h1>React Contacts v0.9</h1>
+                <h2>by Albert Balbastre</h2>
                 <div id="contact_form_div">
-                    <form ref="contact_form">
-                        <input type="hidden" id="contactId" name="id_contact" ref="id_contact"/>
-                        <input type="text" placeholder="first name" name="first_name" ref="first_name"/>
-                        <input type="text" placeholder="last name" name="last_name" ref="last_name"/>
-                        <input type="text" placeholder="email" name="email" ref="email"/>
-                        <input type="text" placeholder="phone" name="phone" ref="phone"/>
-                        <button id="submit-form" onClick={(event) => this.handleSubmit(event)}>submit</button>
-                    </form>
+                    {this.renderForm()}
                 </div>
                 <div id="error_div" ref="error_div">{this.state.msg}</div>
                 <table>
