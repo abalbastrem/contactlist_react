@@ -46,20 +46,8 @@ class ContactList extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
-        // checks all fields are filled TODO toggle sumbit button
-        if (!this.refs.first_name.value || this.refs.first_name.value.trim().length === 0) {
-            this.message("all fields must be filled up")
-            return
-        }
-        if (!this.refs.last_name.value || this.refs.last_name.value.trim().length === 0) {
-            this.message("all fields must be filled up")
-            return
-        }
-        if (!this.refs.email.value || this.refs.email.value.trim().length === 0) {
-            this.message("all fields must be filled up")
-            return
-        }
-        if (!this.refs.phone.value || this.refs.phone.value.trim().length === 0) {
+        // TODO toggle sumbit button
+        if (!this.isFormFilledUp()) {
             this.message("all fields must be filled up")
             return
         }
@@ -77,11 +65,34 @@ class ContactList extends React.Component {
             phone: this.refs.phone.value,
         }
 
-        if (inputContact.id == -1) {
+        if (inputContact.id.length == "" || inputContact.id.length == 0) {
+            console.log("CREATE")
             this.handleCreate(inputContact)
         } else {
+            console.log("EDIT")
             this.handleEdit(inputContact)
         }
+    }
+
+    isFormFilledUp() { // TODO move to helper
+        if (!this.refs.first_name.value || this.refs.first_name.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return false
+        }
+        if (!this.refs.last_name.value || this.refs.last_name.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return false
+        }
+        if (!this.refs.email.value || this.refs.email.value.trim().length === 0) {
+            this.message("all fields must be filled up")
+            return false
+        }
+        if (!this.refs.phone.value || this.refs.phone.value.trim().length === 0) {
+
+            return false
+        }
+
+        return true
     }
 
     isEmailValid(email) { // TODO move out to helper?
@@ -145,7 +156,8 @@ class ContactList extends React.Component {
             contacts: this.state.contacts.concat(contact)
         })
         this.refs.contact_form.reset()
-        this.message("")
+        this.refs.id_contact.value = ""
+        this.message("contact created")
     }
 
     moveContactToForm(contactId) {
@@ -186,7 +198,8 @@ class ContactList extends React.Component {
             contacts: contacts
         })
         this.refs.contact_form.reset()
-        this.message("")
+        this.refs.id_contact.value = ""
+        this.message("contact edited")
     }
 
     renderTableData() {
@@ -213,7 +226,7 @@ class ContactList extends React.Component {
                 <h1>React Contacts</h1>
                 <div id="contact_form_div">
                     <form ref="contact_form">
-                        <input type="hidden" id="contactId" value="-1" name="id_contact" ref="id_contact"/>
+                        <input type="hidden" id="contactId" name="id_contact" ref="id_contact"/>
                         <input type="text" placeholder="first name" name="first_name" ref="first_name"/>
                         <input type="text" placeholder="last name" name="last_name" ref="last_name"/>
                         <input type="text" placeholder="email" name="email" ref="email"/>
