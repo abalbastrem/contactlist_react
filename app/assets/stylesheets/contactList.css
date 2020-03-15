@@ -41,11 +41,11 @@ input[type=text], select {
 }
 
 #submit_button {
-    background-color: rebeccapurple;
+    background-color: #7C73E6;
 }
 
 #submit_button:hover {
-    background-color: purple;
+    background-color: rebeccapurple;
 }
 
 #edit-button {
@@ -66,10 +66,11 @@ div {
     padding: 20px;
 }
 
-h1 {
-    color: rebeccapurple;
+#error-div {
+    font-weight: bold;
+    background-color: #7C73E6;
 }
 
-#error_div {
-    color: red;
+h1, h2 {
+    color: #7C73E6;
 }
