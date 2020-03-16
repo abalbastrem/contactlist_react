@@ -202,6 +202,12 @@ class ContactList extends React.Component {
         this.refs.first_name.focus()
     }
 
+    clearForm(event) {
+        event.preventDefault()
+        this.refs.contact_form.reset()
+        this.refs.id_contact.value = ""
+    }
+
     handleEdit(inputContact) {
         const apiUrl = "http://localhost:3000/contacts/" + inputContact.id
         const apiOpt = {
@@ -230,14 +236,17 @@ class ContactList extends React.Component {
 
     renderForm() {
         return (
-            <form ref="contact_form">
-                <input type="hidden" id="contactId" name="id_contact" ref="id_contact"/>
-                <input type="text" placeholder="first name" name="first_name" ref="first_name"/>
-                <input type="text" placeholder="last name" name="last_name" ref="last_name"/>
-                <input type="text" placeholder="email" name="email" ref="email"/>
-                <input type="text" placeholder="phone" name="phone" ref="phone"/>
-                <button id="submit-form" onClick={(event) => this.handleSubmit(event)}>submit</button>
-            </form>
+            <div>
+                <form ref="contact_form">
+                    <input type="hidden" id="contactId" name="id_contact" ref="id_contact"/>
+                    <input type="text" placeholder="first name" name="first_name" ref="first_name"/>
+                    <input type="text" placeholder="last name" name="last_name" ref="last_name"/>
+                    <input type="text" placeholder="email" name="email" ref="email"/>
+                    <input type="text" placeholder="phone" name="phone" ref="phone"/>
+                    <button id="submit-form" onClick={(event) => this.handleSubmit(event)}>submit</button>
+                    <button onClick={(event) => this.clearForm(event)}>clear</button>
+                </form>
+            </div>
         )
     }
 
@@ -265,9 +274,7 @@ class ContactList extends React.Component {
         return (<div>
                 <h1>React Contacts v0.9</h1>
                 <h2>by Albert Balbastre</h2>
-                <div id="contact_form_div">
-                    {this.renderForm()}
-                </div>
+                {this.renderForm()}
                 <div id="error_div" ref="error_div">{this.state.msg}</div>
                 <table>
                     <thead>
